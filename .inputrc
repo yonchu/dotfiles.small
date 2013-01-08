@@ -1,0 +1,30 @@
+#
+# .inputrc
+#
+
+set editing-mode emacs
+#set keymap vi-insert
+
+set expand-tilde off
+
+# Japanese
+set input-meta on
+set convert-meta off
+set output-meta on
+
+set completion-ignore-case on
+set horizontal-scroll-mode off
+
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+
+set bell-style visible
+
+# MySQL
+$if mysql
+    "\C-xd": "show databases;"
+    "\C-xt": "show tables;"
+    "\C-xu": "select user,host,password from mysql.user order by user,host;"
+    "\C-xb": "select user,host,db       from mysql.db   order by user,host;"
+    "\C-xc": "show create table TN\\G"
+$endif

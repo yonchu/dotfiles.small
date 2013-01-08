@@ -1,0 +1,63 @@
+#
+# .zalias
+#
+
+alias reload='exec zsh -l'
+
+# pushd/popd
+alias pd="pushd"
+alias po="popd"
+
+alias history="history -i"
+alias printfpath='echo $fpath | tr " " "\n"'
+
+compdef _command vc
+
+# Global aliases.
+alias -g NL='> /dev/null'
+alias -g NLL='> /dev/null 2>&1'
+alias -g ER='1>&2'
+
+alias -g G='| grep'
+alias -g L='| $PAGER'
+alias -g W='| wc'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g S='| sed'
+alias -g V='| vim -R -'
+
+# zmv
+#   http://d.hatena.ne.jp/mollifier/20101227/p1
+autoload -Uz zmv
+alias zmv="noglob zmv"
+alias zmvn="zmv -n"
+alias zmvw="zmv -w"
+alias zmvW="zmv -W"
+
+
+# Directory aliases.
+set_hash_in_links() {
+    local links=~/links
+    [ ! -d "$links" ] && return 0
+    [ $(command ls -1 "$links" | wc -l) -eq 0 ] && return 0
+    local src
+    local target
+    for target in "$links"/*; do
+        src=$(basename "$target")
+        case `uname -s` in
+            Darwin|FreeBSD)
+                target=$(readlink -n $target)
+                ;;
+            *)
+                target=$(readlink -fq $target)
+                ;;
+        esac
+        [ -n "$target" ] && hash -d $src="$target"
+    done
+}
+set_hash_in_links
+
+
+### Complete Messages
+echo "Loading .zalias completed!!"
+

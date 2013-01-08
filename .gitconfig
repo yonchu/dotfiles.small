@@ -1,0 +1,238 @@
+[user]
+  #name = xxxxx
+  #email = xxxxx
+[color]
+  status      = auto
+  diff        = auto
+  branch      = auto
+  interactive = auto
+  grep        = auto
+[core]
+  excludesfile = ~/.gitignore
+  autocrlf     = input
+  editor       = /usr/bin/vim
+  quotepath    = false            # 日本語のファイル名表示に対応
+[branch]
+  #autosetuprebase = always
+[help]
+  autocorrect = 1
+[commit]
+  template = ~/.gittemplate
+[push]
+  default = tracking
+[pull]
+  #rebase = true    # from 1.7.9
+[diff]
+  tool = vimdiff
+  #external = p4diff
+[merge]
+  stat = true
+  tool = vimdiff
+  #ff = false       # from 1.7.6
+[mergetool "p4merge"]
+  cmd             = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+  keepTemporaries = false
+  trustExitCode   = false
+  keepBackup      = false
+[rebase]
+  stat = true
+[grep]
+  lineNumber = true
+[alias]
+  # alias list
+  alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
+
+  # Make this a git repo.
+  this = !git init && git add . && git commit -m \"initial commit\"
+
+  # Quickly add a file/dir to .gitignore.
+  ignore=!([ ! -e .gitignore ] && touch .gitignore) | echo $1 >>.gitignore
+
+  # config
+  cfl  = config --global --list
+  cfll = config --local  --list
+  cfe  = config --global -e
+  cfel = config --local  -e
+  ed   = config --global -e
+
+  # status
+  s   = status -sb
+  st  = status
+  si  = status -b --ignored
+
+  # show
+  sh   = show
+  shr  = remote -v
+  shro = remote show origin
+  shrg = remote show github
+
+  # remote
+  remadd = remote add        # git remote add origin <https://..., git://...>
+
+  # ls-files
+  ls-fu = ls-files -u
+
+  # ls-tree
+  ls-th = ls-tree HEAD
+
+  # fetch
+  ft  = fetch
+  ftp = fetch --prune
+  fs  = !git fetch --prune && git su
+
+  # pull
+  plr = pull --rebase
+
+  # push
+  po  = push origin
+  #pof = push -f origin
+  pou = push -u origin
+
+  # rebase
+  rbm  = rebase --merge master
+  rbmm = rebase master
+  rbc  = rebase --continue
+  rba  = rebase --abort
+
+  rbi  = rebase -i
+  rbi1 = rebase -i HEAD^
+  rbi2 = rebase -i HEAD^^
+  rbi3 = rebase -i HEAD^^^
+  rbi4 = rebase -i HEAD^^^^
+  rbi5 = rebase -i HEAD^^^^^
+
+  # merge
+  mn  = merge --no-ff
+  mergetool-def = mergetool -y
+  mergetool-p4  = mergetool --tool=p4merge
+
+  # add
+  ad  = add
+  adp = add -p
+  addall = add -A
+  adN = add -N
+
+  # commit
+  c   = commit -v
+  cm  = commit -v --amend
+  ca  = commit -a -v
+  cam = commit -a -v --amend
+  amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+
+  # checkout
+  ch   = checkout
+  chh  = checkout HEAD
+  chb  = checkout -b
+  cht  = checkout -t
+  chm  = checkout master
+
+  # branch関連
+  br   = branch
+  bra  = branch -a
+  brm  = branch --merged
+  brn  = branch --no-merged
+  brr  = branch -r
+
+  # log
+  wc  = whatchanged
+  ranking = shortlog -s -n --no-merges
+
+  ll  = log --date=iso --graph --pretty=format:'%x09%C(magenta)%h %C(cyan)%cd %C(green)%cn%x09%C(yellow)%d%C(reset)%s'
+  lls = log --date=iso --graph --stat --pretty=format:'%C(cyan),%ad [%cn] <commit:%h tree:%t parent:%p>%C(reset)%n %s%C(yellow)%d%C(reset)%n'
+  log-branch = log --oneline --decorate master..
+
+  ls-topic = !git log --oneline --abbrev-commit --merges $1..$2 | sed -e "s/.* '//;s/'.*//" | sort | uniq
+
+  # reset
+  rh   = reset HEAD
+  rhs  = reset --soft HEAD
+  rhs1 = reset --soft HEAD~
+  rhs2 = reset --soft HEAD~~
+  rhs3 = reset --soft HEAD~~~
+  rhs4 = reset --soft HEAD~~~~
+  rhs5 = reset --soft HEAD~~~~~
+  rhh  = reset --hard HEAD
+  rhh1 = reset --hard HEAD~
+  rhh2 = reset --hard HEAD~~
+  rhh3 = reset --hard HEAD~~~
+  rhh4 = reset --hard HEAD~~~~
+  rhh5 = reset --hard HEAD~~~~~
+
+  # diff関連
+  d   = diff
+  di  = diff
+  dif = diff
+  dm  = diff master
+  dw  = diff --color-words
+  dc  = diff --cached
+  ds  = diff --staged
+  dh  = diff HEAD
+  d1  = diff HEAD~
+  d2  = diff HEAD~~
+  d3  = diff HEAD~~~
+  d4  = diff HEAD~~~~
+  d5  = diff HEAD~~~~~
+  d10 = diff HEAD~~ ~~~~~~~~
+  dro = diff master origin/master
+  drg = diff master github/master
+  dbr = diff -u <(git branch) <(git branch --merged)
+
+  # edit
+  e = edit
+  edit-unmerged   = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+  add-unmerged    = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+  modified = "!f() { git diff $1..$1\\^ --name-only | xargs sh -c 'vim "$@" < /dev/tty' - ;}; f" delete-unmerged =  "!f() { git ls-files --deleted | cut -f2 | sort -u ; }; git rm `f`"
+
+  # rm
+  remove  = !git ls-files -z --deleted | xargs -0 git rm
+
+  # grep
+  gr = grep -iIn --full-name
+
+  # submodule
+  sm   = submodule
+  sms  = submodule status
+  smu  = submodule update
+  smui = submodule update --init
+  smsh = submodule foreach "git remote show origin"
+  smupdate = submodule foreach "git checkout master; git pull"
+
+  # stash
+  #sl = stash list
+  #sp = stash pop
+  #ss = stash save
+
+  # tag
+  tl  = tag -l -n
+  tc  = tag -a
+  ptg = push --tags
+  #ptgd = push origin :refs/tags/
+
+  search-near-tag = name-rev --name-only
+  search-branch   = branch --contains
+  show-cherry     = cherry -v master
+
+  chpk  = cherry-pick
+  chpkn = cherry-pick -n
+
+  # git browse-remote
+  brr = browse-remote
+
+[http]
+  sslVerify = false
+
+[gui]
+  encoding = utf-8
+
+[tig "bind"]
+  # tig
+  #generic = g move-first-line
+  generic = G move-last-line
+  generic = ^F move-page-down
+  generic = ^B move-page-up
+
+[browse-remote "github.com"]
+  top = https://{host}/{path}
+  ref = https://{host}/{path}/tree/{short_ref}
+  rev = https://{host}/{path}/commit/{commit}
+  file = "https://{host}/{path}/blob/{short_rev}/{file}{line && \"#L%d\" % line}"

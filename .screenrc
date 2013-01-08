@@ -1,0 +1,49 @@
+defkanji utf-8
+defencoding utf-8
+encoding utf-8 utf-8
+
+startup_message off
+autodetach on
+bell_msg "^G"
+defscrollback 10000
+defmonitor on
+defbce "on"
+ attrcolor b ".I"
+vbell off
+altscreen on
+shelltitle '$ |shell'
+
+
+## Hardstatus
+hardstatus alwayslastline "%{= wk} %{= gk}%-w%{=bu bw}%n %t%{= wk}%+w %= %{=b wk}[%0`] %{=b wk}[$LANG] %{=b wk}(%l) %{=b wk}%y/%m/%d %02c:%s"
+
+## Caption
+caption splitonly "%{= wk} %?%F%{= wk}%:%{=b Wk}%? %t (screen #%n) %= [$PWD]"
+
+sorendition "+rb .w"
+backtick 0 0 0 echo ${ttyname}
+termcapinfo xterm* ti@:te@
+term xterm-256color
+
+# key bind
+#escape ^Tt
+escape ^Oo
+
+bind n  screen
+bind h  prev
+bind j  prev
+bind k  next
+bind l  next
+bind w  windowlist
+bind x  remove
+bind s  split
+bind v  split -v
+
+# unbind key
+bind ^k
+bind .
+bind ^\
+bind \\
+bind ^h
+bind ^s
+bind ^x

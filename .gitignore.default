@@ -1,0 +1,63 @@
+# https://github.com/github/gitignore
+
+## General
+\#*#
+*#
+.#*
+# Temporary
+.*~
+*~
+# Swap
+*.sw[po]
+# Log
+*.log
+
+## Archive
+*.zip
+*.tar.gz
+.bz2
+
+## vim
+Session.vim
+
+## C/C++
+a.out
+*.o
+*.a
+
+## Java
+*.class
+# Package Files
+*.jar
+*.war
+*.ear
+
+## Python
+*.py[cod]
+.ropeproject
+
+## ActionScript
+*.swf
+
+## TeX/LaTeX
+*.dvi
+*.aux
+
+## Emacs Lisp
+*.elc
+
+## Tags
+tags
+TAGS
+
+## svn
+.svn
+
+## Etc
+*.dSYM
+
+## Mac
+.DS_Store
+
+## Windows
+Thumbs.db
