@@ -58,7 +58,6 @@ create_dotfiles_symlinks() {
         .my.cnf
         .screenrc
         .tmux.conf
-        .vim
         .vimrc
         .zsh)
 
